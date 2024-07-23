@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    
+</div>
+<div class="container" style="display:grid;gap:5%;padding:1vw;grid-template-columns:1fr 1fr">
+   <div class="expense-list" style="border-right:.1px solid silver">
+    <h1>Expense List</h1>
+    <p><strong>Total Expenses:</strong> {{ total_expenses }}</p>
+    <p><strong>Monthly Expenses:</strong> {{ monthly_expenses }}</p>
+   </div>
+{% comment %} <p><strong>Remaining Budget:</strong> {{ remaining_budget }}</p> {% endcomment %}
+
+    <div class="expense-list">
+        <h1>Expenses by Category</h1>
+    <ul>
+        {% for category in expenses_by_category %}
+        <p>{{ category.category }}: {{ category.total_amount }}</p>
+        {% endfor %}
+    </ul>
+    </div>
+    
+</div>
+<br><br>
+<div class="container">
+<a href="{% url 'add_expense' %}" class="btn btn-primary">Add New Expense</a>
+</div>
+<br><br>
+<div class="container" style="margin-bottom:10vw">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.title }}</td>
+                <td>{{ expense.amount }}</td>
+                <td>{{ expense.date }}</td>
+                <td>{{ expense.description }}</td>
+                <td>{{ expense.category }}</td>
+                <td>
+                    <a href="{% url 'edit_expense' expense.pk %}" class="btn btn-success btn-sm">Update</a>
+                    <a href="{% url 'delete_expense' expense.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
